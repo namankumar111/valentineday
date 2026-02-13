@@ -173,28 +173,7 @@
         }
         setInterval(createHeart, 300);
 
-        // ============== TEDDY BEAR (ONLY ONCE) ==============
-        function showTeddyBear() {
-            if (teddyShown) return;
-            teddyShown = true;
-            
-            const container = document.getElementById('teddy-container');
-            container.innerHTML = '';
-            const teddy = document.createElement('div');
-            teddy.classList.add('teddy-bear');
-            teddy.innerHTML = '🧸';
-            container.appendChild(teddy);
-            
-            setTimeout(() => {
-                teddy.style.animation = 'teddyFloat 2s ease-in-out 0.5s forwards';
-                teddy.style.position = 'fixed';
-            }, 800);
-
-            setTimeout(() => {
-                teddy.remove();
-            }, 4000);
-        }
-
+     
         // ============== NAVIGATION ==============
         function show(id) {
             document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
@@ -323,6 +302,7 @@
     </script>
 </body>
 </html>
+
 
 
 
