@@ -1,0 +1,639 @@
+/* Custom Properties */
+:root {
+    --pink: #ff4d6d;
+    --glow: #ff85a1;
+    --dark-blue: #0b0b15;
+    --light-pink: #ffb3c1;
+}
+
+* { box-sizing: border-box; font-family: 'Shantell Sans', cursive; }
+
+/* Google Fonts for Handwriting */
+@import url('https://fonts.googleapis.com/css2?family=Tangerine:wght@700&family=Great+Vibes&display=swap');
+
+body {
+    margin: 0; padding: 0;
+    background: linear-gradient(135deg, #0b0b15 0%, #1a0a1f 50%, #0b0b15 100%);
+    height: 100vh;
+    display: flex; justify-content: center; align-items: center;
+    overflow: hidden;
+    color: #333;
+    position: relative;
+}
+
+/* Enhanced Background with Night Texture */
+#bg-canvas {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: 
+        radial-gradient(circle at 20% 50%, rgba(255, 77, 109, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(255, 129, 161, 0.1) 0%, transparent 50%),
+        linear-gradient(to bottom, rgba(255, 77, 109, 0.05) 0%, transparent 50%, rgba(255, 129, 161, 0.05) 100%);
+    z-index: -2;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: 
+        radial-gradient(circle at 15% 20%, #ff4d6d 0%, transparent 3%),
+        radial-gradient(circle at 85% 30%, #ff85a1 0%, transparent 2%),
+        radial-gradient(circle at 10% 90%, #ff4d6d 0%, transparent 2.5%),
+        radial-gradient(circle at 90% 70%, #ff85a1 0%, transparent 2%),
+        radial-gradient(circle at 50% 50%, transparent 0%, transparent 100%);
+    z-index: -1;
+    filter: blur(80px);
+    opacity: 0.3;
+}
+
+.floating-heart {
+    position: absolute; color: var(--pink);
+    filter: drop-shadow(0 0 20px var(--pink)) drop-shadow(0 0 40px rgba(255, 77, 109, 0.5));
+    animation: floatUp 8s linear infinite, pulse 2s ease-in-out infinite;
+    opacity: 0;
+    font-size: 2rem;
+}
+
+@keyframes floatUp {
+    0% { transform: translateY(110vh) scale(0.3); opacity: 0; }
+    10% { opacity: 1; }
+    50% { opacity: 0.8; transform: translateX(30px) translateY(50vh) scale(1.2); }
+    90% { opacity: 0.2; }
+    100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+}
+
+@keyframes pulse {
+    0%, 100% { filter: drop-shadow(0 0 20px var(--pink)) drop-shadow(0 0 40px rgba(255, 77, 109, 0.5)); }
+    50% { filter: drop-shadow(0 0 30px var(--pink)) drop-shadow(0 0 60px rgba(255, 77, 109, 0.8)); }
+}
+
+/* 2. Card Styling (Scrapbook Look) */
+.card {
+    background: rgba(255, 255, 255, 0.97);
+    width: 90vw;
+    max-width: 450px;
+    max-height: 90vh;
+    padding: 40px;
+    border-radius: 30px;
+    text-align: center;
+    box-shadow: 0 25px 60px rgba(255, 77, 109, 0.5), 0 0 30px rgba(255, 129, 161, 0.3);
+    display: none;
+    position: relative;
+    animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 2px solid rgba(255, 129, 161, 0.3);
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.card.active { display: block; }
+
+@keyframes popIn {
+    from { transform: scale(0.7) rotateY(20deg); opacity: 0; }
+    to { transform: scale(1) rotateY(0deg); opacity: 1; }
+}
+
+@keyframes joyful {
+    0% { transform: scale(1) rotate(0deg); }
+    25% { transform: scale(1.05) rotate(2deg); }
+    50% { transform: scale(1.1) rotate(-2deg); }
+    75% { transform: scale(1.05) rotate(2deg); }
+    100% { transform: scale(1) rotate(0deg); }
+}
+
+.card.joyful {
+    animation: joyful 0.6s ease-in-out !important;
+}
+
+/* Washi Tape */
+.tape {
+    width: 120px; height: 35px;
+    background: linear-gradient(45deg, rgba(255, 105, 180, 0.4), rgba(255, 182, 193, 0.4));
+    position: absolute; z-index: 2;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+.tape-tl { top: -18px; left: -25px; transform: rotate(-15deg); }
+.tape-tr { top: -18px; right: -25px; transform: rotate(15deg); }
+
+/* 3. Elements UI */
+.shimmer { 
+    color: var(--pink); 
+    text-shadow: 0 0 10px var(--glow), 0 0 20px rgba(255, 129, 161, 0.5); 
+    font-size: 2.2rem;
+    margin: 15px 0;
+}
+
+.gift-box { 
+    cursor: pointer; 
+    transition: 0.3s ease; 
+    margin: 30px 0;
+    position: relative;
+    display: inline-block;
+}
+
+.gift-box:hover { 
+    transform: scale(1.15) rotateZ(5deg);
+    filter: drop-shadow(0 0 15px var(--glow));
+}
+
+.gift-box img {
+    filter: drop-shadow(0 5px 15px rgba(0,0,0,0.2));
+}
+
+/* Teddy Bear Animation */
+.teddy-bear {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    font-size: 8rem;
+    animation: teddyJump 1s ease-out forwards;
+    z-index: 1000;
+    filter: drop-shadow(0 0 20px rgba(255, 129, 161, 0.6));
+}
+
+@keyframes teddyJump {
+    0% { 
+        transform: translate(-50%, 150%) scale(0);
+        opacity: 0;
+    }
+    50% { 
+        opacity: 1;
+    }
+    100% { 
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes teddyFloat {
+    0%, 100% { transform: translate(-50%, -50%) scale(1) translateY(0); }
+    50% { transform: translate(-50%, -50%) scale(1) translateY(-20px); }
+}
+
+/* BIG HEARTS GRID - Much Larger Interactive Hearts */
+.big-heart-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+    margin: 35px 0;
+    padding: 20px 0;
+}
+
+.big-heart-container {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    transition: all 0.3s ease;
+}
+
+.big-heart {
+    font-size: 6rem;
+    transition: all 0.3s ease;
+    filter: drop-shadow(0 4px 12px rgba(255, 77, 109, 0.3));
+}
+
+.big-heart-container:hover .big-heart {
+    font-size: 7rem;
+    filter: drop-shadow(0 8px 20px rgba(255, 77, 109, 0.6));
+    transform: scale(1.1);
+}
+
+.heart-message-label {
+    font-size: 0.95rem;
+    color: var(--pink);
+    font-weight: 600;
+    opacity: 0.7;
+}
+
+/* Heart Message Popup */
+.heart-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    animation: popupFade 0.3s ease;
+}
+
+@keyframes popupFade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.heart-popup-content {
+    background: rgba(255, 255, 255, 0.98);
+    border-radius: 30px;
+    padding: 40px 35px;
+    max-width: 320px;
+    text-align: center;
+    box-shadow: 0 25px 60px rgba(255, 77, 109, 0.5);
+    border: 3px solid rgba(255, 129, 161, 0.4);
+    animation: heartPopIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes heartPopIn {
+    from { transform: scale(0.5); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.heart-popup-shape {
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+    animation: heartBeat 0.6s ease-in-out;
+}
+
+@keyframes heartBeat {
+    0%, 100% { transform: scale(1); }
+    25% { transform: scale(1.2); }
+    50% { transform: scale(1.1); }
+}
+
+.heart-popup-content p {
+    color: #333;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin: 15px 0;
+}
+
+/* Memory Gallery */
+.memory-container {
+    position: relative;
+    margin: 25px 0;
+}
+
+.photo-frame {
+    border: 8px solid white;
+    border-radius: 20px;
+    overflow: hidden; 
+    cursor: pointer; 
+    box-shadow: 0 10px 30px rgba(255,77,109,0.3), inset 0 0 20px rgba(255,129,161,0.1);
+    margin: 15px 0;
+    background: #f5f5f5;
+    position: relative;
+    width: 100%;
+    height: 280px;
+}
+
+.photo-frame img {
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover;
+    transition: 0.5s ease;
+}
+
+.photo-frame video {
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover;
+}
+
+.photo-frame:hover img {
+    transform: scale(1.05);
+}
+
+.photo-hint {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    font-size: 0.8rem; 
+    color: white;
+    background: rgba(0,0,0,0.5);
+    padding: 5px 10px;
+    border-radius: 10px;
+}
+
+/* Buttons */
+.btn {
+    background: linear-gradient(135deg, var(--pink), #ff6d8f);
+    color: white; 
+    border: none;
+    padding: 15px 35px; 
+    border-radius: 50px; 
+    font-weight: bold;
+    font-size: 1.1rem;
+    cursor: pointer; 
+    box-shadow: 0 8px 25px rgba(255, 77, 109, 0.4);
+    transition: 0.3s ease;
+    margin: 10px 5px;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    transition: 0.5s;
+}
+
+.btn:hover::before { left: 100%; }
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(255, 77, 109, 0.6);
+}
+
+.btn:active {
+transform: translateY(-3px) scale(1.02);
+}
+
+#noBtn { 
+    background: linear-gradient(135deg, #999, #aaa);
+    position: absolute;
+}
+
+#yesBtn {
+    position: relative !important;
+    margin: 0 auto;
+    display: block;
+}
+
+/* BIG HEART BUTTONS */
+.big-heart-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+    margin: 35px 0;
+}
+
+.big-heart-container {
+    cursor: pointer;
+    text-align: center;
+    transition: 0.3s ease;
+}
+
+.big-heart {
+    font-size: 5rem;
+    transition: 0.3s ease;
+    filter: drop-shadow(0 2px 8px rgba(255, 77, 109, 0.2));
+}
+
+.big-heart-container:hover .big-heart {
+    transform: scale(1.2);
+    filter: drop-shadow(0 5px 15px rgba(255, 77, 109, 0.4));
+}
+
+.heart-message-label {
+    font-size: 0.9rem;
+    color: #999;
+    margin-top: 10px;
+    font-weight: 600;
+}
+
+/* Heart Popup */
+.heart-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.heart-popup-content {
+    background: white;
+    border-radius: 25px;
+    padding: 40px 30px;
+    max-width: 350px;
+    text-align: center;
+    box-shadow: 0 15px 50px rgba(255, 77, 109, 0.4);
+    animation: popIn 0.4s ease;
+}
+
+.heart-popup-shape {
+    font-size: 4rem;
+    margin-bottom: 20px;
+}
+
+#heart-popup-text {
+    font-size: 1.1rem;
+    color: #333;
+    line-height: 1.8;
+    margin: 20px 0;
+}
+
+/* Greeting Card */
+.greeting-card {
+    background: linear-gradient(135deg, #fff9fa, #ffe8f0);
+    border: 3px solid var(--pink);
+    border-radius: 20px;
+    padding: 50px 30px;
+    margin: 20px 0;
+    cursor: pointer;
+    transition: 0.4s ease;
+    box-shadow: 0 10px 30px rgba(255, 77, 109, 0.3);
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.greeting-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(255, 77, 109, 0.5);
+}
+
+.teddy-gift-box {
+    font-size: 5rem;
+    margin: 25px 0;
+    animation: teddyBobble 1.5s ease-in-out infinite;
+}
+
+@keyframes teddyBobble {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+
+/* Greeting Card Design */
+.greeting-card {
+    background: linear-gradient(135deg, #fff0f3, #ffe8f0);
+    border: 3px solid rgba(255, 129, 161, 0.5);
+    border-radius: 25px;
+    padding: 50px 30px;
+    margin: 25px 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 15px 40px rgba(255, 77, 109, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.greeting-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transition: 0.6s;
+    pointer-events: none;
+}
+
+.greeting-card:hover::before {
+    left: 100%;
+}
+
+.greeting-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 50px rgba(255, 77, 109, 0.5);
+}
+
+.teddy-gift-box {
+    font-size: 5rem;
+    margin: 25px 0;
+    animation: teddyBounce 1.5s ease-in-out infinite;
+    display: inline-block;
+}
+
+@keyframes teddyBounce {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-15px) scale(1.05); }
+}
+
+/* Scrollable Message */
+.letter {
+    max-height: 350px; 
+    overflow-y: auto; 
+    text-align: left;
+    padding: 25px; 
+    background: linear-gradient(135deg, #fff9fa, #ffe8f0);
+    border-left: 6px solid var(--pink);
+    font-size: 1rem;
+    line-height: 1.8;
+    border-radius: 10px;
+}
+
+.letter p {
+    margin: 15px 0;
+    color: #333;
+}
+
+.letter::-webkit-scrollbar {
+    width: 8px;
+}
+
+.letter::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.letter::-webkit-scrollbar-thumb {
+    background: var(--pink);
+    border-radius: 10px;
+}
+
+.made-by { 
+    font-size: 0.75rem; 
+    color: #999; 
+    margin-top: 20px;
+    font-style: italic;
+}
+
+/* Scrollbar Styling for Cards */
+.card::-webkit-scrollbar {
+    width: 6px;
+}
+
+.card::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.card::-webkit-scrollbar-thumb {
+    background: var(--pink);
+    border-radius: 10px;
+}
+
+/* Responsive Design */
+.kissing-teddy {
+    font-size: 5rem;
+    margin: 20px 0;
+    animation: kissingTeddy 1.5s ease-in-out infinite;
+    display: inline-block;
+}
+
+@keyframes kissingTeddy {
+    0% { transform: scale(1) rotate(0deg); }
+    25% { transform: scale(1.1) rotate(-3deg); }
+    50% { transform: scale(1.15) rotate(0deg); }
+    75% { transform: scale(1.1) rotate(3deg); }
+    100% { transform: scale(1) rotate(0deg); }
+}
+
+@media (max-width: 768px) {
+    .card {
+        width: 95vw;
+        max-width: 100%;
+        padding: 30px 20px;
+        max-height: 85vh;
+    }
+
+    .big-heart-grid {
+        gap: 18px;
+        padding: 15px 0;
+    }
+
+    .big-heart {
+        font-size: 4.5rem;
+    }
+
+    .big-heart-container:hover .big-heart {
+        font-size: 5.5rem;
+    }
+
+    .heart-message-label {
+        font-size: 0.85rem;
+    }
+
+    .shimmer {
+        font-size: 1.8rem;
+    }
+
+    .photo-frame {
+        height: 250px;
+        margin: 12px 0;
+    }
+
+    .btn {
+        padding: 12px 25px;
+        font-size: 1rem;
+    }
+
+    .greeting-card {
+        padding: 35px 20px;
+    }
+
+    .teddy-gift-box {
+        font-size: 3.5rem;
+    }
+
+    .heart-popup-content {
+        max-width: 280px;
+        padding: 30px 25px;
+    }
+
+    .heart-popup-shape {
+        font-size: 2.5rem;
+    }
+}

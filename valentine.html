@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Special Valentine ❤️</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Shantell+Sans:wght@300;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tangerine:wght@700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="bg-canvas"></div>
+    
+    <!-- Background Music -->
+    <audio id="bgMusic" loop style="display: none;">
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Starting Message Card -->
+    <div class="card active" id="s0">
+        <div class="tape tape-tl"></div>
+        <h2 style="font-size: 1.3rem; color: var(--pink); margin: 20px 0; line-height: 1.6;">
+            this valentine, i made a little something special for you. 💝✨
+        </h2>
+        <p style="color: #666; margin: 25px 0; font-size: 1.05rem;">A journey through my heart, just for you...</p>
+        <div style="height: 80px; display: flex; align-items: flex-end; justify-content: center;">
+            <button class="btn" onclick="show(1)">Continue 💕</button>
+        </div>
+    </div>
+
+    <!-- Hello My Love Card -->
+    <div class="card" id="s1">
+        <div class="tape tape-tr"></div>
+        <h1 class="shimmer">Hello My Love! 👋</h1>
+        <div class="gift-box" onclick="openGift()" style="font-size: 5rem; cursor: pointer;">
+            🎁
+        </div>
+        <p style="font-size: 1.1rem; margin: 20px 0;">I have a special surprise for you...</p>
+        <p style="color: #888; font-size: 0.9rem;">Tap the box to begin our journey ✨</p>
+        <div class="made-by">Made with endless love for you 💕</div>
+    </div>
+
+    <!-- Why I Love You Card with Bigger Hearts -->
+    <div class="card" id="s2">
+        <div class="tape tape-tl"></div>
+        <h2 class="shimmer">Why I Love You 💕</h2>
+        <p style="color: #666; margin: 15px 0;">Tap each big heart to discover my feelings...</p>
+        
+        <div class="big-heart-grid">
+            <div class="big-heart-container" onclick="showHeartMessage(0)">
+                <div class="big-heart">💖</div>
+                <div class="heart-message-label">Smile</div>
+            </div>
+            <div class="big-heart-container" onclick="showHeartMessage(1)">
+                <div class="big-heart">💗</div>
+                <div class="heart-message-label">Kindness</div>
+            </div>
+            <div class="big-heart-container" onclick="showHeartMessage(2)">
+                <div class="big-heart">💓</div>
+                <div class="heart-message-label">Safety</div>
+            </div>
+            <div class="big-heart-container" onclick="showHeartMessage(3)">
+                <div class="big-heart">💝</div>
+                <div class="heart-message-label">Dreams</div>
+            </div>
+        </div>
+
+        <div id="heart-popup" class="heart-popup" style="display: none;">
+            <div class="heart-popup-content">
+                <div class="heart-popup-shape">💖</div>
+                <p id="heart-popup-text"></p>
+                <p style="font-size: 0.9rem; color: #999; margin-top: 15px;">Tap outside to close</p>
+            </div>
+        </div>
+
+        <button class="btn" onclick="show(3)">Our Beautiful Memories 📸</button>
+    </div>
+
+    <!-- Precious Moments Card -->
+    <div class="card" id="s3">
+        <div class="tape tape-tr"></div>
+        <h2 class="shimmer">Our Precious Moments ✨</h2>
+        <p style="color: #666; font-size: 0.95rem; margin: 10px 0;">Swipe through our memories...</p>
+        <div class="memory-container">
+            <div class="photo-frame" onclick="nextPhoto()">
+                <img id="currPhoto" src="https://picsum.photos/400/500?random=1" alt="Memory">
+                <div class="photo-hint">Tap to see more ➜</div>
+            </div>
+        </div>
+        <p id="photo-count" style="color: #999; font-size: 0.9rem;">Memory 1 of 7</p>
+        <button class="btn" onclick="show(4)">One Last Thing... 🌹</button>
+    </div>
+
+    <!-- Will You Be My Valentine Card -->
+    <div class="card" id="s4">
+        <div class="kissing-teddy">🧸</div>
+        <h1 class="shimmer" style="margin: 15px 0;">Will You Be My Valentine? 💕</h1>
+        <p style="color: #666; margin: 20px 0; font-size: 1.05rem;">I'm asking you... from my deepest heart</p>
+        <p id="celebration-text" style="font-size: 2.5rem; font-weight: bold; color: var(--pink); height: 40px; margin: 20px 0; display: none;"></p>
+        <div style="height: 120px; position: relative; margin-top: 30px;">
+            <button class="btn" id="yesBtn" onclick="yes()">YES! 😍💕</button>
+            <button class="btn" id="noBtn">No thanks 🥺</button>
+        </div>
+    </div>
+
+    <!-- Greeting Card -->
+    <div class="card" id="s5">
+        <div class="tape tape-tl"></div>
+        <p style="font-size: 0.95rem; color: #999; margin: 10px 0;">tap to open ✨</p>
+        <div class="greeting-card" onclick="openGreeting()">
+            <h1 style="font-family: 'Tangerine', cursive; font-size: 4rem; color: var(--pink); margin: 15px 0;">Happy Valentine's Day</h1>
+            <div class="teddy-gift-box">🧸</div>
+            <p style="font-size: 1.2rem; color: var(--pink); margin-top: 20px;">just for you ❤️</p>
+        </div>
+    </div>
+
+    <!-- Final Love Message Card -->
+    <div class="card" id="s6">
+        <div class="tape tape-tr"></div>
+        <h2 class="shimmer">To My Forever Love... 💌</h2>
+        <div class="letter">
+            <p><strong>Happy Valentine's Day mine Rasmalai 🫠❤️</strong></p>
+            <p>I created this surprise just for you because words could never fully express what's in my heart...</p>
+            <p>I wanted to be completely honest with you today. I know you're not with me right now, but these 3½ years we shared together mean absolutely everything to me. They were the most beautiful years of my life. I know I made mistakes—many mistakes—but never, NEVER did I take you or our relationship lightly. 🫠</p>
+            <p>I miss you every single day. I think about the memories we created, your laugh, your kindness, everything about you. It haunts me in the most beautiful and painful way. I'm not trying to pressure you or force anything into your life—I just want one chance to sit with you, to look into your eyes, and for you to truly understand how deeply I feel.</p>
+            <p>I don't expect you to say yes immediately, but please, just please try to understand what I'm going through. Every day without you feels incomplete. Our memories kill me daily, but they also keep me alive. I swear on everything that I'm not happy without you. 🥺🫂</p>
+            <p>You might not think you're special to me, but you need to remember this forever—you are my LAST, my FOREVER. No one can ever replace you. No one.</p>
+            <p>I'm always waiting for you. Always. Happy Valentine's Day to the love of my life. ❤️💐</p>
+            <p><strong>Forever yours, always...</strong></p>
+        </div>
+        <div class="made-by">This website is made with all my love, tears, and hope...</div>
+        <button class="btn" onclick="location.reload()">Play Again ✨</button>
+    </div>
+
+    <div id="teddy-container"></div>
+
+    <script>
+        // ============== HEART MESSAGES ==============
+        const heartMessages = [
+            "Your smile brightens even my darkest days! 😊✨",
+            "Your kindness shows me what love really means! 💝",
+            "With you, I feel truly safe and at home! 🏠❤️",
+            "You are my greatest dream come true! 🌟"
+        ];
+
+        const heartEmojis = ['💖', '💗', '💓', '💝'];
+        let teddyShown = false;
+
+        // ============== MUSIC ==============
+        window.addEventListener('load', () => {
+            const audio = document.getElementById('bgMusic');
+            audio.play().catch(() => {
+                document.body.addEventListener('click', () => {
+                    audio.play();
+                }, { once: true });
+            });
+        });
+
+        // ============== BACKGROUND ANIMATION ==============
+        function createHeart() {
+            const canvas = document.getElementById('bg-canvas');
+            const h = document.createElement('div');
+            h.classList.add('floating-heart');
+            h.innerHTML = '❤️';
+            h.style.left = Math.random() * 100 + 'vw';
+            h.style.animationDuration = (Math.random() * 4 + 4) + 's';
+            h.style.fontSize = (Math.random() * 1 + 1.5) + 'rem';
+            canvas.appendChild(h);
+            setTimeout(() => h.remove(), 8000);
+        }
+        setInterval(createHeart, 300);
+
+        // ============== TEDDY BEAR (ONLY ONCE) ==============
+        function showTeddyBear() {
+            if (teddyShown) return;
+            teddyShown = true;
+            
+            const container = document.getElementById('teddy-container');
+            container.innerHTML = '';
+            const teddy = document.createElement('div');
+            teddy.classList.add('teddy-bear');
+            teddy.innerHTML = '🧸';
+            container.appendChild(teddy);
+            
+            setTimeout(() => {
+                teddy.style.animation = 'teddyFloat 2s ease-in-out 0.5s forwards';
+                teddy.style.position = 'fixed';
+            }, 800);
+
+            setTimeout(() => {
+                teddy.remove();
+            }, 4000);
+        }
+
+        // ============== NAVIGATION ==============
+        function show(id) {
+            document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
+            document.getElementById('s' + id).classList.add('active');
+            const popup = document.getElementById('heart-popup');
+            if (popup) popup.style.display = 'none';
+        }
+
+        // ============== GIFT BOX ==============
+        function openGift() {
+            showTeddyBear();
+            setTimeout(() => show(2), 600);
+        }
+
+        // ============== HEART MESSAGES ==============
+        function showHeartMessage(index) {
+            const popup = document.getElementById('heart-popup');
+            const popupText = document.getElementById('heart-popup-text');
+            const popupShape = document.querySelector('.heart-popup-shape');
+            
+            popupText.innerText = heartMessages[index];
+            popupShape.innerText = heartEmojis[index];
+            popup.style.display = 'flex';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const popup = document.getElementById('heart-popup');
+            if (popup) {
+                popup.addEventListener('click', (e) => {
+                    if (e.target === popup) {
+                        popup.style.display = 'none';
+                    }
+                });
+            }
+        });
+
+        // ============== PHOTO GALLERY ==============
+        let pIdx = 0;
+        const photos = [
+            "https://picsum.photos/400/500?random=10",
+            "https://picsum.photos/400/500?random=11",
+            "https://picsum.photos/400/500?random=12",
+            "https://picsum.photos/400/500?random=13",
+            "https://picsum.photos/400/500?random=14",
+            "https://picsum.photos/400/500?random=15",
+            "https://picsum.photos/400/500?random=16"
+        ];
+
+        function nextPhoto() {
+            pIdx = (pIdx + 1) % photos.length;
+            document.getElementById('currPhoto').src = photos[pIdx];
+            document.getElementById('photo-count').innerText = `Memory ${pIdx + 1} of ${photos.length}`;
+        }
+
+        // ============== YES BUTTON ==============
+        function yes() {
+            const card = document.getElementById('s4');
+            const celebText = document.getElementById('celebration-text');
+            const yesBtn = document.getElementById('yesBtn');
+            const noBtn = document.getElementById('noBtn');
+            
+            celebText.style.display = 'block';
+            celebText.innerText = 'YAYYY!!!!!! 💕';
+            
+            yesBtn.disabled = true;
+            noBtn.disabled = true;
+            
+            card.classList.add('joyful');
+            createConfetti();
+            
+            setTimeout(() => {
+                card.classList.remove('joyful');
+                show(5);
+            }, 1500);
+        }
+
+        function createConfetti() {
+            const confettiEmojis = ['🎉', '💕', '❤️', '🎊', '✨', '💖', '🌹'];
+            for (let i = 0; i < 25; i++) {
+                const conf = document.createElement('div');
+                conf.style.position = 'fixed';
+                conf.style.left = Math.random() * 100 + 'vw';
+                conf.style.top = '-20px';
+                conf.style.fontSize = '2rem';
+                conf.style.pointerEvents = 'none';
+                conf.style.zIndex = '999';
+                conf.innerHTML = confettiEmojis[Math.floor(Math.random() * confettiEmojis.length)];
+                document.body.appendChild(conf);
+                
+                const duration = Math.random() * 2 + 2;
+                const xMove = (Math.random() - 0.5) * 300;
+                
+                conf.animate([
+                    { transform: 'translateY(0) translateX(0) rotate(0deg)', opacity: 1 },
+                    { transform: `translateY(100vh) translateX(${xMove}px) rotate(720deg)`, opacity: 0 }
+                ], { duration: duration * 1000, easing: 'ease-in' });
+                
+                setTimeout(() => conf.remove(), duration * 1000);
+            }
+        }
+
+        // ============== GREETING CARD ==============
+        function openGreeting() {
+            show(6);
+        }
+
+        // ============== RUNAWAY NO BUTTON ==============
+        const noBtn = document.getElementById('noBtn');
+        if (noBtn) {
+            noBtn.addEventListener('mouseover', moveBtn);
+            noBtn.addEventListener('touchstart', moveBtn);
+            noBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                moveBtn();
+            });
+        }
+
+        function moveBtn() {
+            const x = Math.random() * (window.innerWidth - 150);
+            const y = Math.random() * (window.innerHeight - 100);
+            noBtn.style.left = x + 'px';
+            noBtn.style.top = y + 'px';
+            noBtn.style.position = 'fixed';
+            noBtn.style.zIndex = '100';
+        }
+    </script>
+</body>
+</html>
